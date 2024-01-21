@@ -162,7 +162,7 @@ public class Huesped {
 
     @Override
     public int hashCode() {
-        return Objects.hash(nombre, dni, correo, telefono, fechaNacimiento);
+        return Objects.hash(dni);
     }
 
     @Override
