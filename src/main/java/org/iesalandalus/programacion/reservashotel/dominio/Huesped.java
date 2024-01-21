@@ -152,6 +152,7 @@ public class Huesped {
         return iniciales.toString();
     }
 
+    //Métodos equals, hashCode y toString
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
