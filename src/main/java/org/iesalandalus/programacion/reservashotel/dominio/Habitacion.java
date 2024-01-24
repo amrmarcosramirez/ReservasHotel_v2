@@ -30,11 +30,11 @@ public class Habitacion {
     public Habitacion(Habitacion habitacion){
         Objects.requireNonNull(habitacion,
                 "ERROR: No es posible copiar una habitación nula.");
-        setPlanta(habitacion.planta);
-        setPuerta(habitacion.puerta);
-        setPrecio(habitacion.precio);
-        setTipoHabitacion(habitacion.tipoHabitacion);
-        setIdentificador(String.valueOf(habitacion.planta)+habitacion.puerta);
+        setPlanta(habitacion.getPlanta());
+        setPuerta(habitacion.getPlanta());
+        setPrecio(habitacion.getPrecio());
+        setTipoHabitacion(habitacion.getTipoHabitacion());
+        setIdentificador(String.valueOf(habitacion.getPlanta())+habitacion.getPuerta());
     }
 
     //Métodos de acceso y modificación
