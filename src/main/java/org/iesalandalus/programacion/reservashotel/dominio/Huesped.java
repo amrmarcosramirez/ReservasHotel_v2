@@ -9,8 +9,8 @@ import java.util.regex.Pattern;
 public class Huesped {
 
     // Se crean los atributos con su visibilidad adecuada
-    private static final String ER_TELEFONO = "^[96][0-9]{8}";
-    private static final String ER_CORREO = "\\w+[\\.\\w]*@\\w+[\\.\\w]*\\.\\w{2,5}\\b\\s?";
+    private static final String ER_TELEFONO = "[96]\\d{8}";
+    private static final String ER_CORREO = ".+@[a-zA-Z]+\\.[a-zA-Z]+";
     private static final String ER_DNI = "([0-9]{8})([A-Za-z])";
     public static final String FORMATO_FECHA = "dd/MM/yyyy";
     private String nombre;
@@ -32,17 +32,17 @@ public class Huesped {
     public Huesped(Huesped huesped){
         Objects.requireNonNull(huesped,
                 "ERROR: No es posible copiar un huésped nulo.");
-        setNombre(huesped.nombre);
-        setDni(huesped.dni);
-        setCorreo(huesped.correo);
-        setTelefono(huesped.telefono);
-        setFechaNacimiento(huesped.fechaNacimiento);
+        setNombre(huesped.getNombre());
+        setDni(huesped.getDni());
+        setCorreo(huesped.getCorreo());
+        setTelefono(huesped.getTelefono());
+        setFechaNacimiento(huesped.getFechaNacimiento());
     }
 
     // Método formteaNombre que se utiliza para dar formato al nombre del huesped
     private String formateaNombre(String nombre){
         nombre = nombre.toLowerCase();
-        String[] nombre2 = nombre.replaceAll("[^a-z0-9áéíóú\\s]", "").split(" ");
+        String[] nombre2 = nombre.replaceAll("[^a-z0-9áéíóú\\s]", "").split("\\s");
         StringBuilder resultado = new StringBuilder();
         for (String s : nombre2) {
             if (!s.isEmpty()) {
@@ -143,7 +143,7 @@ public class Huesped {
     }
 
     private String getIniciales(){
-        String[] nombre2 = nombre.split(" ");
+        String[] nombre2 = getNombre().split("\\s");
         StringBuilder iniciales = new StringBuilder();
         for (String s : nombre2) {
                 iniciales.append(s.charAt(0));
