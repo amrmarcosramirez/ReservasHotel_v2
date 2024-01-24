@@ -43,14 +43,14 @@ public class Reserva {
     public Reserva(Reserva reserva){
         Objects.requireNonNull(reserva,
                 "ERROR: No es posible copiar una reserva nula.");
-        setHuesped(reserva.huesped);
-        setHabitacion(reserva.habitacion);
-        setRegimen(reserva.regimen);
-        setFechaInicioReserva(reserva.fechaInicioReserva);
-        setFechaFinReserva(reserva.fechaFinReserva);
-        setNumeroPersonas(reserva.numeroPersonas);
-        this.checkIn = reserva.checkIn;
-        this.checkOut = reserva.checkOut;
+        setHuesped(reserva.getHuesped());
+        setHabitacion(reserva.getHabitacion());
+        setRegimen(reserva.getRegimen());
+        setFechaInicioReserva(reserva.getFechaInicioReserva());
+        setFechaFinReserva(reserva.getFechaFinReserva());
+        setNumeroPersonas(reserva.getNumeroPersonas());
+        this.checkIn = reserva.getCheckIn();
+        this.checkOut = reserva.getCheckOut();
         setPrecio();
     }
 
