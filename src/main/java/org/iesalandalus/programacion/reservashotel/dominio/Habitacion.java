@@ -5,8 +5,8 @@ import java.util.Objects;
 public class Habitacion {
 
     // Se crean los atributos con su visibilidad adecuada
-    public static final double MIN_PRECIO_HABITACION = 40;
-    public static final double MAX_PRECIO_HABITACION = 150;
+    public static final double MIN_PRECIO_HABITACION = 40.0;
+    public static final double MAX_PRECIO_HABITACION = 150.0;
     public static final int MIN_NUMERO_PUERTA = 0;
     public static final int MAX_NUMERO_PUERTA = 14;
     public static final int MIN_NUMERO_PLANTA = 1;
