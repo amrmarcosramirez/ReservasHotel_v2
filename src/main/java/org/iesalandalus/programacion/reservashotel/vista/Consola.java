@@ -15,7 +15,9 @@ public class Consola {
 
     //Métodos
     public static void mostrarMenu(){
-        System.out.println(Arrays.toString(Opcion.values()));
+        for (Opcion opcion: Opcion.values()) {
+            System.out.println(opcion);
+        }
     }
 
     public static Opcion elegirOpcion() {
@@ -28,43 +30,37 @@ public class Consola {
     }
 
     public static Huesped leerHuesped() {
-
         Huesped huesped = null;
-        String nombre = null;
-        String telefono = null;
-        String correo = null;
-        String dni = null;
+        String nombre;
+        String telefono;
+        String correo;
+        String dni;
 
-        try {
-            do {
-                System.out.print("Introduce el nombre del huésped: ");
-                nombre = Entrada.cadena();
-            } while (nombre.isEmpty());
+        do {
+            System.out.print("Introduce el nombre del huésped: ");
+            nombre = Entrada.cadena();
+        } while (nombre.trim().isEmpty());
 
-            do {
-                System.out.print("Introduce el teléfono del huésped: ");
-                telefono = Entrada.cadena();
-            } while (telefono.isEmpty());
+        do {
+            System.out.print("Introduce el DNI del huésped: ");
+            dni = Entrada.cadena();
+        } while (dni.trim().isEmpty());
 
-            do {
-                System.out.print("Introduce el correo del huésped: ");
-                correo = Entrada.cadena();
-            } while (correo.isEmpty());
+        do {
+            System.out.print("Introduce el correo del huésped: ");
+            correo = Entrada.cadena();
+        } while (correo.trim().isEmpty());
 
-            do {
-                System.out.print("Introduce el DNI del huésped: ");
-                dni = Entrada.cadena();
-            } while (dni.isEmpty());
+        do {
+            System.out.print("Introduce el teléfono del huésped: ");
+            telefono = Entrada.cadena();
+        } while (telefono.trim().isEmpty());
 
-            String mensaje = "Introduce la fecha de nacimiento del huésped (%s): ";
-            LocalDate fechaNacimiento = leerFecha(mensaje);
+        String mensaje = "Introduce la fecha de nacimiento del huésped (%s): ";
+        LocalDate fechaNacimiento = leerFecha(mensaje);
 
-            huesped = new Huesped(nombre, dni, correo, telefono, fechaNacimiento);
-        }
-         catch(IllegalArgumentException | NullPointerException e)
-        {
-            System.out.println(e.getMessage());
-        }
+        huesped = new Huesped(nombre, dni, correo, telefono, fechaNacimiento);
+
         return new Huesped(huesped);
     }
 
@@ -77,18 +73,18 @@ public class Consola {
         String dni = null;
         LocalDate fechaNacimiento = LocalDate.now();
 
-        try {
+        //try {
             do {
                 System.out.print("Introduce el DNI del huésped: ");
                 dni = Entrada.cadena();
             } while (dni.isEmpty());
 
             huesped = new Huesped(nombre, dni, correo, telefono, fechaNacimiento);
-        }
+       /* }
         catch(IllegalArgumentException | NullPointerException e)
         {
             System.out.println(e.getMessage());
-        }
+        }*/
         return new Huesped(huesped);
     }
 
@@ -111,59 +107,67 @@ public class Consola {
     public static Habitacion leerHabitacion() {
 
         Habitacion habitacion = null;
-        int planta = 0;
-        int puerta = -1;
-        double precio = 0.0;
+        int planta;
+        int puerta;
+        double precio;
 
-        try {
+        do {
             System.out.print("Introduce la planta de la habitación: ");
             planta = Entrada.entero();
+        } while (planta < Habitacion.MIN_NUMERO_PLANTA ||
+                planta > Habitacion.MAX_NUMERO_PLANTA);
 
+        do {
             System.out.print("Introduce la puerta de la habitación: ");
             puerta = Entrada.entero();
+        } while (puerta < Habitacion.MIN_NUMERO_PUERTA ||
+                puerta > Habitacion.MAX_NUMERO_PUERTA);
 
+        do {
             System.out.print("Introduce el precio de la habitación: ");
             precio = Entrada.realDoble();
+        } while (precio < Habitacion.MIN_PRECIO_HABITACION ||
+                precio > Habitacion.MAX_PRECIO_HABITACION);
 
-            TipoHabitacion tipoHabitacion = leerTipoHabitacion();
+        TipoHabitacion tipoHabitacion = leerTipoHabitacion();
 
-            habitacion = new Habitacion(planta, puerta, precio, tipoHabitacion);
-        }
-        catch(IllegalArgumentException | NullPointerException e)
-        {
-            System.out.println(e.getMessage());
-        }
+        habitacion = new Habitacion(planta, puerta, precio, tipoHabitacion);
+
         return new Habitacion(habitacion);
     }
 
     public static Habitacion leerHabitacionPorIdentificador() {
 
         Habitacion habitacion = null;
-        int planta = 0;
-        int puerta = -1;
+        int planta;
+        int puerta;
         double precio = 70.0;
         TipoHabitacion tipoHabitacion = TipoHabitacion.SIMPLE;
 
-        try {
+        do {
             System.out.print("Introduce la planta de la habitación: ");
             planta = Entrada.entero();
+        } while (planta < Habitacion.MIN_NUMERO_PLANTA ||
+                planta > Habitacion.MAX_NUMERO_PLANTA);
 
+        do {
             System.out.print("Introduce la puerta de la habitación: ");
             puerta = Entrada.entero();
+        }  while (puerta < Habitacion.MIN_NUMERO_PUERTA ||
+                puerta > Habitacion.MAX_NUMERO_PUERTA);
 
-            habitacion = new Habitacion(planta, puerta, precio, tipoHabitacion);
-        }
-        catch(IllegalArgumentException | NullPointerException e)
-        {
-            System.out.println(e.getMessage());
-        }
+        habitacion = new Habitacion(planta, puerta, precio, tipoHabitacion);
+
         return new Habitacion(habitacion);
     }
 
     public static TipoHabitacion leerTipoHabitacion(){
         int ordinalHabitacion;
+        for (TipoHabitacion habitacion: TipoHabitacion.values()) {
+            System.out.println(habitacion.ordinal() + ".- " + habitacion);
+        }
         do {
-            System.out.println(Arrays.toString(TipoHabitacion.values()));
+            //System.out.println(Arrays.toString(TipoHabitacion.values()));
             System.out.println("\nElige una opción: ");
             ordinalHabitacion = Entrada.entero();
         } while (!(ordinalHabitacion >= 0 && ordinalHabitacion <= (TipoHabitacion.values().length - 1)));

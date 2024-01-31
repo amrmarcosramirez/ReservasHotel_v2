@@ -24,7 +24,7 @@ public enum TipoHabitacion {
     //Método toString
     @Override
     public String toString() {
-        return String.format("TipoHabitacion[descripción=%s, número personas=%s]",
+        return String.format("Tipo Habitacion: %s, número personas: %s",
                 this.descripcion, getNumeroMaximoPersonas());
     }
 }
