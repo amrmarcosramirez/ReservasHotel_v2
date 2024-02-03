@@ -4,6 +4,7 @@ import org.iesalandalus.programacion.reservashotel.dominio.*;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
@@ -96,6 +97,23 @@ public class Consola {
             try {
                 System.out.printf(mensaje, Huesped.FORMATO_FECHA);
                 fecha = LocalDate.parse(Entrada.cadena(), DateTimeFormatter.ofPattern(Huesped.FORMATO_FECHA));
+                fechaValida = true;
+            } catch (DateTimeParseException e) {
+                fechaValida = false;
+            }
+        } while(!fechaValida);
+        return fecha;
+    }
+
+    public static LocalDateTime leerFechaHora(String mensaje) {
+        LocalDateTime fecha = null;
+        boolean fechaValida = false;
+
+        do {
+            try {
+                System.out.printf(mensaje, Reserva.FORMATO_FECHA_HORA_RESERVA);
+                fecha = LocalDateTime.from(LocalDate.parse(Entrada.cadena(),
+                        DateTimeFormatter.ofPattern(Reserva.FORMATO_FECHA_HORA_RESERVA)));
                 fechaValida = true;
             } catch (DateTimeParseException e) {
                 fechaValida = false;
