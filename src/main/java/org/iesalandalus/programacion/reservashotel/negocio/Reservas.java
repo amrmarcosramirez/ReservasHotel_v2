@@ -6,6 +6,8 @@ import org.iesalandalus.programacion.reservashotel.dominio.Reserva;
 import org.iesalandalus.programacion.reservashotel.dominio.TipoHabitacion;
 
 import javax.naming.OperationNotSupportedException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Reservas {
@@ -152,6 +154,14 @@ public class Reservas {
             }
         }
         return reservasHabitacion;
+    }
+
+    public void realizarCheckin(Reserva reserva, LocalDateTime fecha){
+        reserva.setCheckIn(fecha);
+    }
+
+    public void realizarCheckOut(Reserva reserva, LocalDateTime fecha){
+        reserva.setCheckOut(fecha);
     }
 
 }
