@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class Consola {
 
     //Constructor
-    private Consola(){};
+    private Consola(){}
 
     //Métodos
     public static void mostrarMenu(){
@@ -31,7 +31,7 @@ public class Consola {
     }
 
     public static Huesped leerHuesped() {
-        Huesped huesped = null;
+        Huesped huesped;
         String nombre;
         String telefono;
         String correo;
@@ -66,26 +66,20 @@ public class Consola {
     }
 
     public static Huesped leerClientePorDni() {
-
-        Huesped huesped = null;
+        Huesped huesped;
         String nombre = "Huésped Ficticio";
         String telefono = "666666666";
         String correo = "HuspedFicticio@gmail.com";
-        String dni = null;
+        String dni;
         LocalDate fechaNacimiento = LocalDate.now();
 
-        //try {
-            do {
-                System.out.print("Introduce el DNI del huésped: ");
-                dni = Entrada.cadena();
-            } while (dni.isEmpty());
+        do {
+            System.out.print("Introduce el DNI del huésped: ");
+            dni = Entrada.cadena();
+        } while (dni.isEmpty());
 
-            huesped = new Huesped(nombre, dni, correo, telefono, fechaNacimiento);
-       /* }
-        catch(IllegalArgumentException | NullPointerException e)
-        {
-            System.out.println(e.getMessage());
-        }*/
+        huesped = new Huesped(nombre, dni, correo, telefono, fechaNacimiento);
+
         return new Huesped(huesped);
     }
 
@@ -123,8 +117,7 @@ public class Consola {
     }
 
     public static Habitacion leerHabitacion() {
-
-        Habitacion habitacion = null;
+        Habitacion habitacion;
         int planta;
         int puerta;
         double precio;
@@ -155,8 +148,7 @@ public class Consola {
     }
 
     public static Habitacion leerHabitacionPorIdentificador() {
-
-        Habitacion habitacion = null;
+        Habitacion habitacion;
         int planta;
         int puerta;
         double precio = 70.0;
@@ -203,35 +195,28 @@ public class Consola {
     }
 
     public static Reserva leerReserva() {
-
-        Reserva reserva = null;
-        Huesped huesped = null;
-        Habitacion habitacion = null;
-        Regimen regimen = null;
+        Reserva reserva;
+        Huesped huesped;
+        Habitacion habitacion;
+        Regimen regimen;
         int numeroPersonas;
 
-        try {
+        huesped = leerHuesped();
+        habitacion = leerHabitacion();
+        regimen = leerRegimen();
 
-            huesped = leerHuesped();
-            habitacion = leerHabitacion();
-            regimen = leerRegimen();
+        String mensaje = "Introduce la fecha de inicio de la reserva (%s): ";
+        LocalDate fechaInicioReserva = leerFecha(mensaje);
 
-            String mensaje = "Introduce la fecha de inicio de la reserva (%s): ";
-            LocalDate fechaInicioReserva = leerFecha(mensaje);
+        String mensaje2 = "Introduce la fecha de fin de la reserva (%s): ";
+        LocalDate fechaFinReserva = leerFecha(mensaje2);
 
-            String mensaje2 = "Introduce la fecha de fin de la reserva (%s): ";
-            LocalDate fechaFinReserva = leerFecha(mensaje2);
+        System.out.print("Introduce el número de personas: ");
+        numeroPersonas = Entrada.entero();
 
-            System.out.print("Introduce el número de personas: ");
-            numeroPersonas = Entrada.entero();
+        reserva = new Reserva(huesped, habitacion, regimen, fechaInicioReserva,
+                fechaFinReserva, numeroPersonas);
 
-            reserva = new Reserva(huesped, habitacion, regimen, fechaInicioReserva,
-                    fechaFinReserva, numeroPersonas);
-        }
-        catch(IllegalArgumentException | NullPointerException e)
-        {
-            System.out.println(e.getMessage());
-        }
         return new Reserva(reserva);
     }
 
