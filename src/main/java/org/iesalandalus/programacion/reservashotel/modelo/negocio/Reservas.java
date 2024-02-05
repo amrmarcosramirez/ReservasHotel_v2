@@ -1,12 +1,11 @@
-package org.iesalandalus.programacion.reservashotel.negocio;
+package org.iesalandalus.programacion.reservashotel.modelo.negocio;
 
-import org.iesalandalus.programacion.reservashotel.dominio.Habitacion;
-import org.iesalandalus.programacion.reservashotel.dominio.Huesped;
-import org.iesalandalus.programacion.reservashotel.dominio.Reserva;
-import org.iesalandalus.programacion.reservashotel.dominio.TipoHabitacion;
+import org.iesalandalus.programacion.reservashotel.modelo.dominio.Habitacion;
+import org.iesalandalus.programacion.reservashotel.modelo.dominio.Huesped;
+import org.iesalandalus.programacion.reservashotel.modelo.dominio.Reserva;
+import org.iesalandalus.programacion.reservashotel.modelo.dominio.TipoHabitacion;
 
 import javax.naming.OperationNotSupportedException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -116,7 +115,7 @@ public class Reservas {
     }
 
     public Reserva[] getReservas(Huesped huesped) {
-        Objects.requireNonNull(huesped, "ERROR: No se pueden buscar reservas de un profesor nulo.");
+        Objects.requireNonNull(huesped, "ERROR: No se pueden buscar reservas de un huésped nulo.");
 
         Reserva[] reservasHuesped = new Reserva[capacidad];
         int indice = 0;
@@ -130,7 +129,7 @@ public class Reservas {
 
     public Reserva[] getReservas(TipoHabitacion tipoHabitacion) {
         if (tipoHabitacion == null) {
-            throw new NullPointerException("ERROR: No se pueden buscar reservas de un aula nula.");
+            throw new NullPointerException("ERROR: No se pueden buscar reservas de un tipo de habitación nula.");
         }
         Reserva[] reservasHabitacion = new Reserva[capacidad];
         int indice = 0;
@@ -144,7 +143,7 @@ public class Reservas {
 
     public Reserva[] getReservasFuturas(Habitacion habitacion) {
         if (habitacion == null) {
-            throw new NullPointerException("ERROR: No se pueden buscar reservas de una permanencia nula.");
+            throw new NullPointerException("ERROR: No se pueden buscar reservas de una habitación nula.");
         }
         Reserva[] reservasHabitacion = new Reserva[capacidad];
         int indice = 0;

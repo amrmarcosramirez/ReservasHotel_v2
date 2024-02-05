@@ -1,7 +1,10 @@
-package org.iesalandalus.programacion.reservashotel.negocio;
+package org.iesalandalus.programacion.reservashotel.modelo.negocio;
 
-import org.iesalandalus.programacion.reservashotel.dominio.Habitacion;
+import org.iesalandalus.programacion.reservashotel.modelo.dominio.Habitacion;
+import org.iesalandalus.programacion.reservashotel.modelo.dominio.TipoHabitacion;
+
 import javax.naming.OperationNotSupportedException;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Habitaciones {
@@ -24,6 +27,17 @@ public class Habitaciones {
     //Métodos de acceso y modificación
     public Habitacion[] get() {
         return copiaProfundaHabitaciones();
+    }
+
+    public Habitacion[] get(TipoHabitacion tipoHabitacion) {
+        Habitacion[] copiaHabitaciones = null;
+        int j = 0;
+        for (Habitacion habitacion : get()){
+            if(!(habitacion == null) && habitacion.getTipoHabitacion().equals(tipoHabitacion)) {
+                copiaHabitaciones[j++] = new Habitacion(habitacion);
+            }
+        }
+        return copiaHabitaciones;
     }
 
     private Habitacion[] copiaProfundaHabitaciones() {

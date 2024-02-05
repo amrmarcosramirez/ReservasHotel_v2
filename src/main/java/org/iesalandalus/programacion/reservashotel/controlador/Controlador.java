@@ -6,13 +6,9 @@ import org.iesalandalus.programacion.reservashotel.modelo.dominio.Habitacion;
 import org.iesalandalus.programacion.reservashotel.modelo.dominio.Huesped;
 import org.iesalandalus.programacion.reservashotel.modelo.dominio.Reserva;
 import org.iesalandalus.programacion.reservashotel.modelo.dominio.TipoHabitacion;
-import org.iesalandalus.programacion.reservashotel.modelo.negocio.Habitaciones;
-import org.iesalandalus.programacion.reservashotel.modelo.negocio.Huespedes;
-import org.iesalandalus.programacion.reservashotel.modelo.negocio.Reservas;
 import org.iesalandalus.programacion.reservashotel.vista.Vista;
 
 import javax.naming.OperationNotSupportedException;
-import java.lang.reflect.Constructor;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -54,7 +50,7 @@ public class Controlador {
         modelo.borrar(huesped);
     }
 
-    public Huesped[] getHuesped() {
+    public Huesped[] getHuespedes() {
         return modelo.getHuespedes();
     }
 
@@ -70,11 +66,11 @@ public class Controlador {
         modelo.borrar(habitacion);
     }
 
-    public Habitacion[] getHabitacion() {
+    public Habitacion[] getHabitaciones() {
         return modelo.getHabitaciones();
     }
 
-    public Habitacion[] getHabitacion(TipoHabitacion tipoHabitacion) {
+    public Habitacion[] getHabitaciones(TipoHabitacion tipoHabitacion) {
         return modelo.getHabitaciones(tipoHabitacion);
     }
 
@@ -90,15 +86,15 @@ public class Controlador {
         modelo.borrar(reserva);
     }
 
-    public Reserva[] getReserva() {
+    public Reserva[] getReservas() {
         return modelo.getReservas();
     }
 
-    public Reserva[] getReserva(Huesped huesped) {
-        return modelo.getReservas();
+    public Reserva[] getReservas(Huesped huesped) {
+        return modelo.getReservas(huesped);
     }
 
-    public Reserva[] getReserva(TipoHabitacion tipoHabitacion) {
+    public Reserva[] getReservas(TipoHabitacion tipoHabitacion) {
         return modelo.getReservas(tipoHabitacion);
     }
 

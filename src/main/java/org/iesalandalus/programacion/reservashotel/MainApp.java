@@ -4,9 +4,6 @@ import org.iesalandalus.programacion.reservashotel.modelo.Modelo;
 import org.iesalandalus.programacion.reservashotel.controlador.Controlador;
 import org.iesalandalus.programacion.reservashotel.vista.Vista;
 
-import javax.naming.OperationNotSupportedException;
-
-import static org.iesalandalus.programacion.reservashotel.vista.Consola.*;
 
 public class MainApp {
 

@@ -1,4 +1,4 @@
-package org.iesalandalus.programacion.reservashotel.dominio;
+package org.iesalandalus.programacion.reservashotel.modelo.dominio;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 public class Huesped {
 
     // Se crean los atributos con su visibilidad adecuada
-    private static final String ER_TELEFONO = "[96]\\d{8}";
+    private static final String ER_TELEFONO = "[9867]\\d{8}";
     private static final String ER_CORREO = ".+@[a-zA-Z]+\\.[a-zA-Z]+";
     private static final String ER_DNI = "([0-9]{8})([A-Za-z])";
     public static final String FORMATO_FECHA = "dd/MM/yyyy";
