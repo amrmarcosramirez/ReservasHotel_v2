@@ -386,6 +386,7 @@ public class Vista {
             System.out.println("Elija la reserva a la que desea realizar el checkin.");
             int numReserva = Entrada.entero();
             Reserva reserva = controlador.getReservas(huesped1)[numReserva];
+            listarReservas(reserva.getHabitacion().getTipoHabitacion());
             String mensaje = "Introduce la fecha y hora de checkin de la reserva (%s): ";
             LocalDateTime fechaHora = leerFechaHora(mensaje);
             controlador.realizarCheckin(reserva, fechaHora);
@@ -402,6 +403,7 @@ public class Vista {
             System.out.println("Elija la reserva a la que desea realizar el checkin.");
             int numReserva = Entrada.entero();
             Reserva reserva = controlador.getReservas(huesped1)[numReserva];
+            listarReservas(reserva.getHabitacion().getTipoHabitacion());
             String mensaje = "Introduce la fecha y hora de checkin de la reserva (%s): ";
             LocalDateTime fechaHora = leerFechaHora(mensaje);
             controlador.realizarCheckout(reserva, fechaHora);
