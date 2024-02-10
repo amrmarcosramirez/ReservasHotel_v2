@@ -4,122 +4,74 @@ import org.iesalandalus.programacion.reservashotel.modelo.dominio.Habitacion;
 import org.iesalandalus.programacion.reservashotel.modelo.dominio.TipoHabitacion;
 
 import javax.naming.OperationNotSupportedException;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Habitaciones {
 
     // Se crean los atributos con su visibilidad adecuada
-    private int capacidad;
-    private int tamano;
-    private Habitacion[] coleccionHabitaciones;
+    private List<Habitacion> coleccionHabitaciones;
 
     //Constructores
-    public Habitaciones(int capacidad) {
-        if (capacidad <= 0) {
-            throw new IllegalArgumentException("ERROR: La capacidad debe ser mayor que cero.");
-        }
-        this.capacidad = capacidad;
-        coleccionHabitaciones = new Habitacion[capacidad];
-        tamano = 0;
+    public Habitaciones() {
+        this.coleccionHabitaciones = new ArrayList<>();
     }
 
     //Métodos de acceso y modificación
-    public Habitacion[] get() {
+    public List<Habitacion> get() {
         return copiaProfundaHabitaciones();
     }
 
-    public Habitacion[] get(TipoHabitacion tipoHabitacion) {
-        Habitacion[] copiaHabitaciones = null;
-        int j = 0;
+    public List<Habitacion> get(TipoHabitacion tipoHabitacion) {
+        List<Habitacion> copiaHabitaciones = new ArrayList<>();
         for (Habitacion habitacion : get()){
             if(!(habitacion == null) && habitacion.getTipoHabitacion().equals(tipoHabitacion)) {
-                copiaHabitaciones[j++] = new Habitacion(habitacion);
+                copiaHabitaciones.add(new Habitacion(habitacion));
             }
         }
         return copiaHabitaciones;
     }
 
-    private Habitacion[] copiaProfundaHabitaciones() {
-        Habitacion[] copiaHabitaciones = new Habitacion[capacidad];
-        for (int i = 0; !tamanoSuperado(i); i++) {
-            copiaHabitaciones[i] = new Habitacion(coleccionHabitaciones[i]);
+    private List<Habitacion> copiaProfundaHabitaciones() {
+        List<Habitacion> copiaHabitaciones = new ArrayList<>();
+        for (Habitacion habitacion : coleccionHabitaciones) {
+            copiaHabitaciones.add(new Habitacion(habitacion));
         }
         return copiaHabitaciones;
     }
 
     public int getTamano() {
-        return tamano;
-    }
-
-    public int getCapacidad() {
-        return capacidad;
+        return coleccionHabitaciones.size();
     }
 
     public void insertar(Habitacion habitacion) throws OperationNotSupportedException {
         Objects.requireNonNull(habitacion, "ERROR: No se puede insertar una habitación nula.");
-        int indice = buscarIndice(habitacion);
-        if (capacidadSuperada(indice)) {
-            throw new OperationNotSupportedException("ERROR: No se aceptan más habitaciones.");
-        }
-        if (tamanoSuperado(indice)) {
-            coleccionHabitaciones[indice] = new Habitacion(habitacion);
-            tamano++;
+        if (!coleccionHabitaciones.contains(habitacion)) {
+            coleccionHabitaciones.add(new Habitacion(habitacion));
         } else {
             throw new OperationNotSupportedException("ERROR: Ya existe una habitación con ese identificador.");
         }
     }
 
-    private int buscarIndice(Habitacion habitacion) {
-        Objects.requireNonNull(habitacion, "ERROR: No se puede buscar el índice de un huésped nulo.");
-
-        int indice = 0;
-        boolean habitacionEncontrada = false;
-        while (!tamanoSuperado(indice) && !habitacionEncontrada) {
-            if (habitacion.equals(get()[indice])) {
-                habitacionEncontrada = true;
-            } else {
-                indice++;
-            }
-        }
-        return indice;
-    }
-
-    private boolean tamanoSuperado(int indice) {
-        return indice >= getTamano();
-    }
-
-    private boolean capacidadSuperada(int indice) {
-        return indice >= getCapacidad();
-    }
-
     public Habitacion buscar(Habitacion habitacion) {
-
-        int indice = buscarIndice(habitacion);
-        if (tamanoSuperado(indice)) {
+        int indice = coleccionHabitaciones.indexOf(habitacion);
+        if (indice == -1) {
             return null;
         } else {
-            return new Habitacion(get()[indice]);
+            return new Habitacion(coleccionHabitaciones.get(indice));
         }
     }
 
     public void borrar(Habitacion habitacion) throws OperationNotSupportedException {
         Objects.requireNonNull(habitacion, "ERROR: No se puede borrar una habitación nula.");
 
-        int indice = buscarIndice(habitacion);
-        if (tamanoSuperado(indice)) {
-            throw new OperationNotSupportedException("ERROR: No existe ninguna habitación como la indicada.");
+        int indice = coleccionHabitaciones.indexOf(habitacion);
+        if (indice == -1) {
+            throw new OperationNotSupportedException("ERROR: No existe ningún aula con ese nombre.");
         } else {
-            desplazarUnaPosicionHaciaIzquierda(indice);
+            coleccionHabitaciones.remove(indice);
         }
     }
 
-    private void desplazarUnaPosicionHaciaIzquierda(int indice) {
-        int i;
-        for (i = indice; !tamanoSuperado(i); i++) {
-            coleccionHabitaciones[i] = coleccionHabitaciones[i+1];
-        }
-        coleccionHabitaciones[i] = null;
-        tamano--;
-    }
 }
