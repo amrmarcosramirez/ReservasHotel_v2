@@ -24,7 +24,7 @@ public class Consola {
     public static Opcion elegirOpcion() {
         int ordinalOpcion;
         do {
-            System.out.println("\nElige una opción: ");
+            System.out.println("Elige una opción: ");
             ordinalOpcion = Entrada.entero();
         } while (!(ordinalOpcion >= 0 && ordinalOpcion <= (Opcion.values().length - 1)));
         return Opcion.values()[ordinalOpcion];
@@ -177,7 +177,6 @@ public class Consola {
             System.out.println(habitacion.ordinal() + ".- " + habitacion);
         }
         do {
-            //System.out.println(Arrays.toString(TipoHabitacion.values()));
             System.out.println("\nElige una opción: ");
             ordinalHabitacion = Entrada.entero();
         } while (!(ordinalHabitacion >= 0 && ordinalHabitacion <= (TipoHabitacion.values().length - 1)));
@@ -186,8 +185,10 @@ public class Consola {
 
     public static Regimen leerRegimen(){
         int ordinalRegimen;
+        for (Regimen regimen: Regimen.values()) {
+            System.out.println(regimen.ordinal() + ".- " + regimen);
+        }
         do {
-            System.out.println(Arrays.toString(Regimen.values()));
             System.out.println("\nElige un régimen: ");
             ordinalRegimen = Entrada.entero();
         } while (!(ordinalRegimen >= 0 && ordinalRegimen <= (Regimen.values().length - 1)));

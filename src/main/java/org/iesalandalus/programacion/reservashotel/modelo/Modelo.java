@@ -86,32 +86,15 @@ public class Modelo {
     }
 
     public Reserva[] getReservas(Huesped huesped) {
-        Reserva[] listaReservas = new Reserva[reservas.getReservas(huesped).length];
-        int i = 0;
-        for (Reserva reserva : reservas.getReservas(huesped)){
-            listaReservas[i++] = new Reserva(reserva);
-        }
-        return listaReservas;
+        return reservas.getReservas(huesped);
     }
 
     public Reserva[] getReservas(TipoHabitacion tipoHabitacion) {
-        Reserva[] listaReservas;
-        listaReservas = new Reserva[reservas.getReservas(tipoHabitacion).length];
-        int j = 0;
-        for (Reserva reserva : reservas.getReservas(tipoHabitacion)){
-            listaReservas[j++] = new Reserva(reserva);
-        }
-        return listaReservas;
+        return reservas.getReservas(tipoHabitacion);
     }
 
     public Reserva[] getReservasFuturas(Habitacion habitacion) {
-        Reserva[] listaHabitacionesFuturas;
-        listaHabitacionesFuturas = new Reserva[reservas.getReservasFuturas(habitacion).length];
-        int j = 0;
-        for (Reserva reserva : reservas.getReservasFuturas(habitacion)){
-            listaHabitacionesFuturas[j++] = new Reserva(reserva);
-        }
-        return listaHabitacionesFuturas;
+        return reservas.getReservasFuturas(habitacion);
     }
 
     public void realizarCheckin(Reserva reserva, LocalDateTime fecha){

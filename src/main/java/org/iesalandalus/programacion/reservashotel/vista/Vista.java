@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import static org.iesalandalus.programacion.reservashotel.vista.Consola.*;
 
@@ -53,10 +52,17 @@ public class Vista {
             case INSERTAR_RESERVA -> insertarReserva();
             case ANULAR_RESERVA -> anularReserva();
             case MOSTRAR_RESERVAS -> mostrarReservas();
-            case CONSULTAR_DISPONIBILIDAD -> consultarDisponibilidad(
-                    leerTipoHabitacion(),
-                    leerFecha("Introduce la fecha de inicio de reserva (%s): "),
-                    leerFecha("Introduce la fecha de fin de reserva (%s): "));
+            case CONSULTAR_DISPONIBILIDAD -> {
+                    Habitacion habitacionDisponible = consultarDisponibilidad(
+                            leerTipoHabitacion(),
+                            leerFecha("Introduce la fecha de inicio de reserva (%s): "),
+                            leerFecha("Introduce la fecha de fin de reserva (%s): "));
+                    if (habitacionDisponible == null) {
+                        System.out.println("El tipo de habitación NO está disponible.");
+                    } else {
+                        System.out.println("La habitación: " + habitacionDisponible + " está disponible.");
+                    }
+            }
             case REALIZAR_CHECKIN -> realizarCheckin();
             case REALIZAR_CHECKOUT -> realizarCheckOut();
         }
@@ -119,11 +125,12 @@ public class Vista {
     }
 
     private void mostrarHuespedes(){
-        Stream<Huesped> listaHuespedes = Arrays.stream(controlador.getHuespedes()).filter(Objects::nonNull);
-        int noNulos = (int) listaHuespedes.count();
+        Huesped[] listaHuespedes = controlador.getHuespedes();
+        int noNulos = (int) Arrays.stream(listaHuespedes).filter(Objects::nonNull).count();
         if (noNulos > 0) {
-            for (Object huesped : listaHuespedes.toArray()) {
-                System.out.println(huesped);
+            for (Huesped huesped : listaHuespedes) {
+                if (!(huesped == null))
+                    System.out.println(huesped);
             }
         } else {
             System.out.println("No hay huéspedes que mostrar.");
@@ -187,11 +194,12 @@ public class Vista {
     }
 
     private void mostrarHabitaciones(){
-        Stream<Habitacion> listaHabitacion = Arrays.stream(controlador.getHabitaciones()).filter(Objects::nonNull);
-        int noNulos = (int) listaHabitacion.count();
+        Habitacion[] listaHabitacion = controlador.getHabitaciones();
+        int noNulos = (int) Arrays.stream(listaHabitacion).filter(Objects::nonNull).count();
         if (noNulos > 0) {
-            for (Object habitacion : listaHabitacion.toArray()) {
-                System.out.println(habitacion);
+            for (Habitacion habitacion : listaHabitacion) {
+                if (!(habitacion == null))
+                    System.out.println(habitacion);
             }
         } else {
             System.out.println("No hay habitaciones que mostrar.");
@@ -221,13 +229,15 @@ public class Vista {
     }
 
     private void listarReservas(Huesped huesped){
-        Stream<Reserva> reservas = Arrays.stream(controlador.getReservas()).filter(Objects::nonNull);
-        int noNulos = (int) reservas.count();
+        Reserva[] reservas = controlador.getReservas(huesped);
+        int noNulos = (int) Arrays.stream(reservas).filter(Objects::nonNull).count();
         if (noNulos > 0) {
             int i = 0;
-            for (Object reserva1 : reservas.toArray()) {
-                System.out.println(i + ".- " + reserva1);
-                i++;
+            for (Reserva reserva : reservas) {
+                if (!(reserva == null)) {
+                    System.out.println(i + ".- " + reserva);
+                    i++;
+                }
             }
         } else {
             System.out.println("No hay reservas que listar.");
@@ -235,13 +245,15 @@ public class Vista {
     }
 
     private void listarReservas(TipoHabitacion tipoHabitacion){
-        Stream<Reserva> reservas = Arrays.stream(controlador.getReservas(tipoHabitacion)).filter(Objects::nonNull);
-        int noNulos = (int) reservas.count();
+        Reserva[] reservas = controlador.getReservas(tipoHabitacion);
+        int noNulos = (int) Arrays.stream(reservas).filter(Objects::nonNull).count();
         if (noNulos > 0) {
             int i = 0;
-            for (Object reserva1 : reservas.toArray()) {
-                System.out.println(i + ".- " + reserva1);
-                i++;
+            for (Reserva reserva : reservas) {
+                if (!(reserva == null)) {
+                    System.out.println(i + ".- " + reserva);
+                    i++;
+                }
             }
         } else {
             System.out.println("No hay reservas que listar.");
@@ -267,8 +279,8 @@ public class Vista {
             Huesped huesped1 = controlador.buscar(huesped);
             if (huesped1 != null) {
                 Reserva[] reservas1 = controlador.getReservas(huesped1);
-                reservas1 = getReservasAnulables(reservas1);
-                if (reservas1.length > 0) {
+                if (Arrays.stream(reservas1).anyMatch(Objects::nonNull)) {
+                    reservas1 = getReservasAnulables(reservas1);
                     int i = 0;
                     for (Reserva reserva2 : reservas1) {
                         System.out.println(i + ".- " + reserva2);
@@ -300,11 +312,12 @@ public class Vista {
     }
 
     private void mostrarReservas(){
-        Stream<Reserva> listaReserva = Arrays.stream(controlador.getReservas()).filter(Objects::nonNull);
-        int noNulos = (int) listaReserva.count();
+        Reserva[] listaReserva = controlador.getReservas();
+        int noNulos = (int) Arrays.stream(listaReserva).filter(Objects::nonNull).count();
         if (noNulos > 0) {
-            for (Object reserva1 : listaReserva.toArray()) {
-                System.out.println(reserva1);
+            for (Reserva reserva : listaReserva) {
+                if (!(reserva == null))
+                    System.out.println(reserva);
             }
         } else {
             System.out.println("No hay reservas que mostrar.");
@@ -382,14 +395,23 @@ public class Vista {
         try {
             Huesped huesped = leerClientePorDni();
             Huesped huesped1 = controlador.buscar(huesped);
-            listarReservas(huesped1);
-            System.out.println("Elija la reserva a la que desea realizar el checkin.");
-            int numReserva = Entrada.entero();
-            Reserva reserva = controlador.getReservas(huesped1)[numReserva];
-            listarReservas(reserva.getHabitacion().getTipoHabitacion());
-            String mensaje = "Introduce la fecha y hora de checkin de la reserva (%s): ";
-            LocalDateTime fechaHora = leerFechaHora(mensaje);
-            controlador.realizarCheckin(reserva, fechaHora);
+            Reserva[] reservas = controlador.getReservas(huesped1);
+            if(!(huesped1==null)){
+                if(Arrays.stream(reservas).anyMatch(Objects::nonNull)){
+                    listarReservas(huesped1);
+                    System.out.println("Elija la reserva a la que desea realizar el checkin.");
+                    int numReserva = Entrada.entero();
+                    Reserva reserva = reservas[numReserva];
+                    listarReservas(reserva.getHabitacion().getTipoHabitacion());
+                    String mensaje = "Introduce la fecha y hora de checkin de la reserva (%s): ";
+                    LocalDateTime fechaHora = leerFechaHora(mensaje);
+                    controlador.realizarCheckin(reserva, fechaHora);
+                } else {
+                    System.out.println("No existe ninguna reseva para dicho huésped.");
+                }
+            } else {
+                System.out.println("No existe ningún huésped con dicho DNI.");
+            }
         } catch (IllegalArgumentException | NullPointerException e) {
             System.out.println(e.getMessage());
         }
@@ -399,14 +421,23 @@ public class Vista {
         try {
             Huesped huesped = leerClientePorDni();
             Huesped huesped1 = controlador.buscar(huesped);
-            listarReservas(huesped1);
-            System.out.println("Elija la reserva a la que desea realizar el checkin.");
-            int numReserva = Entrada.entero();
-            Reserva reserva = controlador.getReservas(huesped1)[numReserva];
-            listarReservas(reserva.getHabitacion().getTipoHabitacion());
-            String mensaje = "Introduce la fecha y hora de checkin de la reserva (%s): ";
-            LocalDateTime fechaHora = leerFechaHora(mensaje);
-            controlador.realizarCheckout(reserva, fechaHora);
+            Reserva[] reservas = controlador.getReservas(huesped1);
+            if(!(huesped1==null)){
+                if(Arrays.stream(reservas).anyMatch(Objects::nonNull)){
+                    listarReservas(huesped1);
+                    System.out.println("Elija la reserva a la que desea realizar el checkin.");
+                    int numReserva = Entrada.entero();
+                    Reserva reserva = reservas[numReserva];
+                    listarReservas(reserva.getHabitacion().getTipoHabitacion());
+                    String mensaje = "Introduce la fecha y hora de checkin de la reserva (%s): ";
+                    LocalDateTime fechaHora = leerFechaHora(mensaje);
+                    controlador.realizarCheckout(reserva, fechaHora);
+                } else {
+                    System.out.println("No existe ninguna reseva para dicho huésped.");
+                }
+            } else {
+                System.out.println("No existe ningún huésped con dicho DNI.");
+            }
         } catch (IllegalArgumentException | NullPointerException e) {
             System.out.println(e.getMessage());
         }
