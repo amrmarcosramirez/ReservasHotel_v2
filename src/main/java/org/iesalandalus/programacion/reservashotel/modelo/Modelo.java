@@ -10,11 +10,11 @@ import org.iesalandalus.programacion.reservashotel.modelo.negocio.Reservas;
 
 import javax.naming.OperationNotSupportedException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Modelo {
 
     // Se crean los atributos con su visibilidad adecuada
-    private static final int CAPACIDAD = 45;
     private Habitaciones habitaciones;
     private Reservas reservas;
     private Huespedes huespedes;
@@ -24,9 +24,9 @@ public class Modelo {
 
     //Se crean los métodos
     public void comenzar() {
-        this.habitaciones = new Habitaciones(CAPACIDAD);
-        this.reservas = new Reservas(CAPACIDAD);
-        this.huespedes = new Huespedes(CAPACIDAD);
+        this.habitaciones = new Habitaciones();
+        this.reservas = new Reservas();
+        this.huespedes = new Huespedes();
     }
 
     public void terminar() {
@@ -45,7 +45,7 @@ public class Modelo {
         huespedes.borrar(huesped);
     }
 
-    public Huesped[] getHuespedes() {
+    public List<Huesped> getHuespedes() {
         return huespedes.get();
     }
 
@@ -61,11 +61,11 @@ public class Modelo {
         habitaciones.borrar(habitacion);
     }
 
-    public Habitacion[] getHabitaciones() {
+    public List<Habitacion> getHabitaciones() {
         return habitaciones.get();
     }
 
-    public Habitacion[] getHabitaciones(TipoHabitacion tipoHabitacion) {
+    public List<Habitacion> getHabitaciones(TipoHabitacion tipoHabitacion) {
         return habitaciones.get(tipoHabitacion);
     }
 
@@ -81,19 +81,19 @@ public class Modelo {
         reservas.borrar(reserva);
     }
 
-    public Reserva[] getReservas() {
+    public List<Reserva> getReservas() {
         return reservas.get();
     }
 
-    public Reserva[] getReservas(Huesped huesped) {
+    public List<Reserva> getReservas(Huesped huesped) {
         return reservas.getReservas(huesped);
     }
 
-    public Reserva[] getReservas(TipoHabitacion tipoHabitacion) {
+    public List<Reserva> getReservas(TipoHabitacion tipoHabitacion) {
         return reservas.getReservas(tipoHabitacion);
     }
 
-    public Reserva[] getReservasFuturas(Habitacion habitacion) {
+    public List<Reserva> getReservasFuturas(Habitacion habitacion) {
         return reservas.getReservasFuturas(habitacion);
     }
 
