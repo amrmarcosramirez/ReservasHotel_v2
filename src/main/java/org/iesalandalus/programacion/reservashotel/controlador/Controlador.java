@@ -29,7 +29,7 @@ public class Controlador {
     }
 
     //Se crean los métodos
-    public void comenzar() throws OperationNotSupportedException {
+    public void comenzar() {
         modelo.comenzar();
         vista.comenzar();
     }

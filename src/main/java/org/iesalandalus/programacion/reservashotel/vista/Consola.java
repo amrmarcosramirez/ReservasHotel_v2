@@ -5,6 +5,7 @@ import org.iesalandalus.programacion.utilidades.Entrada;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
@@ -106,8 +107,12 @@ public class Consola {
         do {
             try {
                 System.out.printf(mensaje, Reserva.FORMATO_FECHA_HORA_RESERVA);
-                fecha = LocalDateTime.from(LocalDate.parse(Entrada.cadena(),
-                        DateTimeFormatter.ofPattern(Reserva.FORMATO_FECHA_HORA_RESERVA)));
+                LocalDate fecha1 = leerFecha("\nIntroduce la fecha: ");
+                System.out.print("Introduce la hora: ");
+                LocalTime time1 = LocalTime.parse(Entrada.cadena());
+                /*fecha = LocalDateTime.from(LocalDate.parse(Entrada.cadena(),
+                        DateTimeFormatter.ofPattern(Reserva.FORMATO_FECHA_HORA_RESERVA)));*/
+                fecha = LocalDateTime.of(fecha1, time1);
                 fechaValida = true;
             } catch (DateTimeParseException e) {
                 fechaValida = false;
