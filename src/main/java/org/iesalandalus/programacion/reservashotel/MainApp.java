@@ -4,16 +4,21 @@ import org.iesalandalus.programacion.reservashotel.modelo.Modelo;
 import org.iesalandalus.programacion.reservashotel.controlador.Controlador;
 import org.iesalandalus.programacion.reservashotel.vista.Vista;
 
+import javax.naming.OperationNotSupportedException;
+
 
 public class MainApp {
 
     // Main
     public static void main(String[] args) {
-
-        System.out.println("Programa para la gestión de reservas del hotel IES Al-Ándalus");
-        Modelo modelo = new Modelo();
-        Vista vista = new Vista();
-        Controlador controlador = new Controlador(modelo, vista);
-        controlador.comenzar();
+        try {
+            System.out.println("Programa para la gestión de reservas del hotel IES Al-Ándalus");
+            Modelo modelo = new Modelo();
+            Vista vista = new Vista();
+            Controlador controlador = new Controlador(modelo, vista);
+            controlador.comenzar();
+        } catch (OperationNotSupportedException | IllegalArgumentException | NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
